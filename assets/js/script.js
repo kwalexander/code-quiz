@@ -132,14 +132,21 @@ function checkOption(answer) {
         correctAnswer++;
         answerCheck.textContent = "Correct";
     }
+    //// else decrement 5 second penalty
     else {
         totalTime -= 5;
         timeLeftEl.textContent = totalTime;
         answerCheck.textContent = "Wrong";
     }
+    // then increment the question index and advance to the next question
+    questionIndex++;
+    if (questionIndex < questions.length) {
+        nextQuestion();
+    }
+    else {
+        gameOver();
+    }
 }
-//// else decrement 5 second penalty
-//// then increment the question index
 
 // functions to submit an answer that has been clicked in a question
 function submit0() {
