@@ -1,3 +1,4 @@
+
 // define questions, options, and correct answer (array?). Source: MDN https://developer.mozilla.org/
 var questions = [
     {
@@ -38,6 +39,31 @@ var questions = [
 ];
 
 // DOM element references
+    // header elements
+    var viewScoresEl = document.querySelector("#viewScores");
+    var timeLeftEl = document.querySelector("timeLeft");
+
+    // opening view
+    var openingEl = document.querySelector("#opening");
+    var startQuizBtnEl = document.querySelector("#startQuizBtn");
+
+    // quiz view
+    var quizEl = document.querySelector("#quiz");
+    var questionEl = document.querySelector("#question");
+    var choicesEl = document.querySelector("#choices");
+
+    // submit score view
+    var inputHighScoreEl = document.querySelector("#inputHighScore");
+    var scoreEl = document.querySelector("#score");
+    var initialsEl = document.querySelector("#initials");
+    var submitScoreBtnEl = document.querySelecgor("#submitScore");
+
+    // high scores view
+    var highScoresEl = document.querySelector("#highScores");
+    var scoresEl = document.querySelector("#scores");
+    var goBackBtnEl = document.querySelector("#goBack");
+    var clearScoresBtnEl = document.querySelector("#clearScores");
+
 
 // function to start a timer when user clicks start button
 
