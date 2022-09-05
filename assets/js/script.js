@@ -49,7 +49,12 @@ var questions = [
     // quiz view
     var quizEl = document.querySelector("#quiz");
     var questionEl = document.querySelector("#question");
-    var choicesEl = document.querySelector("#choices");
+    var optionsEl = document.querySelector("#options");
+    var option0 = document.querySelector("#option0");
+    var option1 = document.querySelector("#option1");
+    var option2 = document.querySelector("#option2");
+    var option3 = document.querySelector("#option3");
+
 
     // submit score view
     var inputHighScoreEl = document.querySelector("#inputHighScore");
