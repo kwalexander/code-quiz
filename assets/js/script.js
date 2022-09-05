@@ -64,8 +64,19 @@ var questions = [
     var goBackBtnEl = document.querySelector("#goBack");
     var clearScoresBtnEl = document.querySelector("#clearScores");
 
+// time and score variables
+var startTime = 60;
+var timeElapsed = 0;
 
-// function to start a timer when user clicks start button
+// function to start a timer when user clicks start button, and countdown in seconds
+function startTimer () {
+    timeLeftEl.textContent = startTime
+    interval = setInterval(function() {
+        timeElapsed++;
+        timeLeftEl.textContent = timeGiven - timeElapsed;
+    })
+
+}
 
 
 // function to show the quiz
