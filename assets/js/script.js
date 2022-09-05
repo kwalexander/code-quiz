@@ -54,7 +54,7 @@ var questions = [
     var option1 = document.querySelector("#option1");
     var option2 = document.querySelector("#option2");
     var option3 = document.querySelector("#option3");
-
+    var answerCheck = document.querySelector("#answerCheck");
 
     // submit score view
     var inputHighScoreEl = document.querySelector("#inputHighScore");
@@ -72,6 +72,8 @@ var questions = [
 var startTime = 60;
 var timeElapsed = 0;
 var currentQuestion = 0;
+var correctAnswer = 0;
+var questionIndex = 0;
 
 // function to start the quiz and timer when user clicks the start button
 function startQuiz() {
@@ -80,7 +82,7 @@ function startQuiz() {
     timeLeftEl.textContent = totalTime;
     initialsEl.textContent = "";
     
-    // once quiz starts, high the opening screen, input HS screen, and HS screens, but show quiz questions and time left
+    // once quiz starts, hide the opening screen, input HS screen, and HS screens, but show quiz questions and time left
     openingEl.style.display = "none"
     quizEl.style.display = "block"
     inputHighScoreEl.style.display = "none"
@@ -109,7 +111,7 @@ function stopTimer () {
     clearInterval(interval);
 }
 
-// function to progress to the next question (if statement or for loop?)
+// function to display the next question
 function nextQuestion() {
     // get the question and 4 options from the previously defined array
     question.textContent = questions[questionIndex].question;
@@ -120,9 +122,42 @@ function nextQuestion() {
 }
 
 // function to check if answer is correct
-//// if user's answer matches correct answer, display Correct!
+//// if user's answer matches correct answer, increment the total score 1 and display Correct!
+function checkOption(answer) {
+
+    answerCheck.style.display = "block";
+
+    if (questions[questionIndex].answer === questions[questionIndex].options[answer]) {
+        // increment running tally of correct answers by 1
+        correctAnswer++;
+        answerCheck.textContent = "Correct";
+    }
+    else {
+        totalTime -= 5;
+        timeLeftEl.textContent = totalTime;
+        answerCheck.textContent = "Wrong";
+    }
+}
 //// else decrement 5 second penalty
 //// then increment the question index
+
+// functions to submit an answer that has been clicked in a question
+function submit0() {
+    checkOption(0);
+}
+
+function submit1() {
+    checkOption(1);
+}
+
+function submit2() {
+    checkOption(2);
+}
+
+function submit3() {
+    checkOption(3);
+}
+
 
 // function to end the game
 function gameOver () {
@@ -131,8 +166,8 @@ function gameOver () {
     inputHighScoreEl.style.display = "none"
     highScoresEl.style.display = "none"
     timeLeftEl.style.display = "display"
-
-    // add more here
+    answerCheck.style.display = "none"
+    // add more here if needed
 }
 
 // function to store the high score (input initials, add to local storage, stringify JSON)
@@ -144,7 +179,7 @@ function gameOver () {
 // event listeners for directing clicks
 startQuizBtnEl.addEventListener("click", startQuiz);
 
-option0.addEventListener("click", )
-option1.addEventListener("click", )
-option2.addEventListener("click", )
-option3.addEventListener("click", )
+option0.addEventListener("click", submit0);
+option1.addEventListener("click", submit1);
+option2.addEventListener("click", submit2);
+option3.addEventListener("click", submit3);
