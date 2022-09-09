@@ -1,3 +1,8 @@
+// Tutor session
+//// Saving, recalling and clearing high score list
+//// View high score link
+//// Go back to start button
+
 // define questions, options, and correct answer. Source: MDN https://developer.mozilla.org/
 var questions = [
     {
@@ -63,22 +68,21 @@ var questions = [
     var submitScoreBtnEl = document.querySelector("#submitScore");
 
     // high scores view
-    var highScoresEl = document.querySelector("#highScores");
-    var scoresEl = document.querySelector("#scores");
+    var viewHighScoresEl = document.querySelector("#highScores");
+    var listHighScoresEl = document.querySelector("#listScores");
     var goBackBtnEl = document.querySelector("#goBack");
     var clearScoresBtnEl = document.querySelector("#clearScores");
 
+    var finalScore = document.querySelector("#finalScore");
+
 // time, score, and question variables
-var startTime = 60;
-var timeElapsed = 0;
-var currentQuestion = 0;
+var totalTime = 60;
 var correctAnswer = 0;
 var questionIndex = 0;
 
 // function to start the quiz and timer when user clicks the start button
 function startQuiz() {
-    questionIndex = 0; // will use this to track which question the user is on
-    totalTime = 60
+    // questionIndex = 0; // will use this to track which question the user is on
     timeLeftEl.textContent = totalTime;
     initialsEl.textContent = "";
     
@@ -86,7 +90,7 @@ function startQuiz() {
     openingEl.style.display = "none"
     quizEl.style.display = "block"
     inputHighScoreEl.style.display = "none"
-    highScoresEl.style.display = "none"
+    viewHighScoresEl.style.display = "none"
     timeLeftEl.style.display = "block"
 
     // use a standard timer interval, decrementing from the starting total time
@@ -97,24 +101,28 @@ function startQuiz() {
         // once time has decreased to 0, clear the interval and if there aren't any more question run the game over function
         if(totalTime <=0) {
             clearInterval(startTimer);
-            if (questionIndex <questions.length - 1) {
+            if (questionIndex < questions.length - 1) {
                 gameOver();
             }
         }
     }, 1000); // decrease time by 1000ms decrements
 
-    nextQuestion();
+    displayQuiz();
 }
 
 // function to stop timer -- no longer need this?
 function stopTimer () {
-    clearInterval(interval);
+    totalTime = 1
+}
+
+function displayQuiz() {
+    nextQuestion();
 }
 
 // function to display the next question
 function nextQuestion() {
     // get the question and 4 options from the previously defined array
-    question.textContent = questions[questionIndex].question;
+    questionEl.textContent = questions[questionIndex].question;
     option0.textContent = questions[questionIndex].options[0];
     option1.textContent = questions[questionIndex].options[1];
     option2.textContent = questions[questionIndex].options[2];
@@ -123,21 +131,28 @@ function nextQuestion() {
 
 // function to check if answer is correct
 //// if user's answer matches correct answer, increment the total score 1 and display Correct!
-function checkOption(answer) {
+function checkAnswer(answer) {
 
     answerCheck.style.display = "block";
 
     if (questions[questionIndex].answer === questions[questionIndex].options[answer]) {
         // increment running tally of correct answers by 1
         correctAnswer++;
-        answerCheck.textContent = "Correct";
+        answerCheck.textContent = "Correct!";
+        console.log(correctAnswer);
     }
-    //// else decrement 5 second penalty
+    // or else decrement 5 second penalty
     else {
         totalTime -= 5;
         timeLeftEl.textContent = totalTime;
-        answerCheck.textContent = "Wrong";
+        answerCheck.textContent = "Incorrect!";
     }
+
+    setTimeout(() => {
+        const box = document.getElementById('ansewrCheck');
+        answerCheck.style.display = 'none';
+    }, 2000);
+
     // then increment the question index and advance to the next question
     questionIndex++;
     if (questionIndex < questions.length) {
@@ -150,41 +165,136 @@ function checkOption(answer) {
 
 // functions to submit an answer that has been clicked in a question
 function submit0() {
-    checkOption(0);
+    checkAnswer(0);
 }
 
 function submit1() {
-    checkOption(1);
+    checkAnswer(1);
 }
 
 function submit2() {
-    checkOption(2);
+    checkAnswer(2);
 }
 
 function submit3() {
-    checkOption(3);
+    checkAnswer(3);
 }
 
 
 // function to end the game
-function gameOver () {
+function gameOver() {
     openingEl.style.display = "none"
     quizEl.style.display = "none"
-    inputHighScoreEl.style.display = "none"
-    highScoresEl.style.display = "none"
-    timeLeftEl.style.display = "display"
+    inputHighScoreEl.style.display = "block"
+    viewHighScoresEl.style.display = "none"
+    timeLeftEl.style.display = "block"
     answerCheck.style.display = "none"
     // add more here if needed
+
+    console.log("game over");
+
+    finalScore.textContent = correctAnswer;
+
+    questionIndex = 0;
+
+    stopTimer();
 }
 
 // function to store the high score (input initials, add to local storage, stringify JSON)
+function storeHighScores(event) {
+    // prevent form from refreshing the page
+    event.preventDefault();
+    
+    // display the right containers
+    openingEl.style.display = "none"
+    quizEl.style.display = "none"
+    inputHighScoreEl.style.display = "block"
+    viewHighScoresEl.style.display = "none"
+    timeLeftEl.style.display = "block"
+    answerCheck.style.display = "none"
 
+    // save scores into a local storage array
+    var savedHighScores = localStorage.getItem("highscores");
+    var scoresArray;
+
+    if (savedHighScores === null) {
+        scoresArray = [];
+    }
+    else {
+        scoresArray = JSON.parse(savedHighScores)
+    }
+
+    var userScore = {
+        initials: initialsEl.value,
+        score: finalScore.textContent
+    };
+
+    // push the score to the array
+    scoresArray.push(userScore);
+
+    // stringify in local storage
+    var scoresArrayString = JSON.stringify(scoresArray);
+    window.localStorage.setItem("highscores", scoresArrayString);
+
+    showHighScores();
+}
 
 // function to show the high score
+function showHighScores () {
+    openingEl.style.display = "none"
+    quizEl.style.display = "none"
+    inputHighScoreEl.style.display = "none"
+    viewHighScoresEl.style.display = "block"
+    timeLeftEl.style.display = "block"
+    answerCheck.style.display = "none"
 
+    // get high scores from local storage
+    var savedHighScores = localStorage.getItem("highscores");
+
+    // convert to JSON object
+    var storedHighScores = JSON.parse(savedHighScores);
+
+    if (savedHighScores === null) {
+        storedHighScores = [];
+    }
+
+    // will clear list of high scores; setting empty value in ""
+    listHighScoresEl.innerHTML="";
+
+    for (var i = 0; i < storedHighScores.length; i++) {
+        var NewHighScore = document.createElement("p");
+        NewHighScore.innerHTML = storedHighScores[i].initials + ": " + storedHighScores[i].score;
+        listHighScoresEl.appendChild(NewHighScore);
+    }
+}
+
+// function to clear high scores
+function clearScores () {
+    window.localStorage.removeItem('highscores');
+
+    showHighScores();
+}
+
+function goBack () {
+    openingEl.style.display = "block"
+    quizEl.style.display = "none"
+    inputHighScoreEl.style.display = "none"
+    viewHighScoresEl.style.display = "none"
+    timeLeftEl.style.display = "block"
+    answerCheck.style.display = "none"
+
+    totalTime = 60
+
+    startQuiz();
+}
 
 // event listeners for directing clicks
 startQuizBtnEl.addEventListener("click", startQuiz);
+submitScoreBtnEl.addEventListener("click", storeHighScores);
+clearScoresBtnEl.addEventListener("click", clearScores);
+goBackBtnEl.addEventListener("click", goBack);
+viewScoresEl.addEventListener("click", showHighScores);
+
 
 option0.addEventListener("click", submit0);
 option1.addEventListener("click", submit1);

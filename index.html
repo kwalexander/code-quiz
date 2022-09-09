@@ -8,7 +8,6 @@
     <title>Code Quiz</title>
     <link rel="stylesheet" href="./assets/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
 </head>
 
 <body>
@@ -26,10 +25,10 @@
         </div>
 
         <!-- intro start view -->
-        <div class="row" id="opening" style="display:block;">
+        <div class="col text-left" id="opening" style="display:block;" class="col text-left">
             <h2>Coding Quiz Challenge</h2>
             <p>Try to answer the following code-related questions within the time limit. Incorrect answers will penalize your score/time by ten seconds!</p>
-            <button type="button" class="btn" id="startQuizBtn">Start Quiz</button>
+            <button type="button" id="startQuizBtn" class="btn btn-primary">Start Quiz</button>
         </div>
 
         <!-- dynamic section for quiz questions -->
@@ -37,16 +36,16 @@
             <h2 id="question"></h2>
             <div class="container" id="options">
                 <div class="row">
-                    <button type="button" id="option0"></button>
+                    <button type="button" id="option0" class="btn btn-primary"></button>
                 </div>
                 <div class="row">
-                    <button type="button" id="option1"></button>
+                    <button type="button" id="option1" class="btn btn-primary"></button>
                 </div>
                 <div class="row">
-                    <button type="button" id="option2"></button>
+                    <button type="button" id="option2" class="btn btn-primary"></button>
                 </div>
                 <div class="row">
-                    <button type="button" id="option3"></button>
+                    <button type="button" id="option3" class="btn btn-primary"></button>
                 </div>
             </div>
             <p id="answerCheck" style="display: none;">check</p>
@@ -55,15 +54,15 @@
         <!-- dynamic section for inputing high score -->
         <div class="container" id="inputHighScore" style="display:none;">
             <h2>All done!</h2>
-            <p>Your final score is <span id="score"></span></p>
+            <p>Your final score is <span id="finalScore"></span></p>
             <p>Enter your initials:<input id="initials"></p>
             <button type=button id="submitScore">Submit</button>
         </div>
 
         <!-- dynamic section for viewing high scores -->
         <div class="container" id="highScores" style="display:none;">
-            <h2>High scores</h2>
-            <div id="scores"></div>
+            <h2>High Scores</h2>
+            <div id="listScores"></div>
             <button type="button" id="goBack">Go back</button>
             <button type="button" id="clearScores">Clear high scores</button>
         </div>
