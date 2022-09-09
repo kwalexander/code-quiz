@@ -11,7 +11,7 @@ This application is a code quiz game, so that players can answer questions and e
 * ability to return to return to the start of the quiz and play again
 
 # Screenshot
-Application screenshot: ![here](assets/Code_Quiz_Screenshot.png?raw=true "here")
+Application screenshot: ![here](assets/images/Code_Quiz_Screenshot.png?raw=true "here")
 
 # Links
 The deployed application can be viewed here: https://kwalexander.github.io/code-quiz/
